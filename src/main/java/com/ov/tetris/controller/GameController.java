@@ -47,6 +47,7 @@ public class GameController {
         // actions
         menuPanel.setOnStart(() -> startGame());
         menuPanel.setOnLeaderboard(() -> showLeaderboard());
+        menuPanel.setOnQuit(() -> quitGame());
         pausePanel.setOnAction(() -> openMenu());
         gameOverPanel.setOnAction(() -> openMenu());
         gameOverPanel.setOnLogScore(() -> logScore());
@@ -143,7 +144,7 @@ public class GameController {
 
         //Show game over screen
         boolean isHighScore = model.checkHighScore();
-        gameOverPanel.showGameOver(score, isHighScore);
+        gameOverPanel.showGameOver(score, isHighScore, model.getIsScoreLogged());
     }
     
     public void logScore() {
@@ -212,5 +213,9 @@ public class GameController {
         infoPanel.render(model);
         queuePanel.render(model.getPieceQue());
         holdPanel.render(model.getHoldPiece(), model.getCanHold());
+    }
+
+    private void quitGame() {
+        System.exit(0);
     }
 }

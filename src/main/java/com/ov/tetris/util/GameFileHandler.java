@@ -1,6 +1,7 @@
 package com.ov.tetris.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
 
@@ -12,35 +13,35 @@ public class GameFileHandler {
             scoreWriter.write(text);
             scoreWriter.close();
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error writing score file: " + e.getMessage());
         }
     }
 
     public static String readGameScoreFile() {
         try {
             File scoreFile = new File("score.txt");
-            Scanner reader = new Scanner(scoreFile);
             String scoreString = "";
             
             if (!scoreFile.exists()) {
-                // text.setText("File is not found!");
-                reader.close();
-                return "";
+                return scoreString;
             }
+
+            Scanner reader = new Scanner(scoreFile);
 
             while (reader.hasNext()) {
                 String line = reader.nextLine();
                 scoreString += line;
             }
             reader.close();
-            System.out.println(scoreString);
             return scoreString;
-            
 
+        } catch (FileNotFoundException e) {
+                System.err.println("Score file not found: " + e.getMessage());
+                return "";
 
         } catch (Exception e) {
-            // TODO: handle exception
-            return "";
+                System.err.println("Error reading score file: " + e.getMessage());
+                return "";
         }
     }
     

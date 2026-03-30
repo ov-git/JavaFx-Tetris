@@ -47,13 +47,15 @@ public class Tetris extends Application {
         BlockPanel hold = new BlockPanel(280 / 4);
         Label holdLabel = new Label("Hold: ");
         holdLabel.setId("label");
+        Label pauseLabel = new Label("P to pause");
+        pauseLabel.setId("pause-label");
 
         ImageView logoImage = ResourceLoader.getLogoImage();
         logoImage.setFitWidth(110);
         logoImage.setFitHeight(55);
         
         infoLayout.getChildren().addAll(infoPanel, queuePanel);
-        infoLayout2.getChildren().addAll(logoImage, holdLabel, hold);
+        infoLayout2.getChildren().addAll(logoImage, holdLabel, hold, pauseLabel);
         
         infoLayout.setSpacing(10);
 

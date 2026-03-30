@@ -311,7 +311,6 @@ public class GameModel {
 
     public void toggleIsScoreLogged() {
         isScoreLogged = !isScoreLogged;
-        System.out.println(isScoreLogged);
     }
 
     public int getDropInterval() {
@@ -441,7 +440,9 @@ public class GameModel {
     public void logHighScores() {
         String scoreString = "";
         for (Score s : highScores) {
-            scoreString += s.getPlayer() + " " + s.getScore() + ",";
+            if(!s.getPlayer().isEmpty()) {
+                scoreString += s.getPlayer() + " " + s.getScore() + ",";               
+            }
         }
         GameFileHandler.writeGameScoreFile(scoreString);
     }

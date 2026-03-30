@@ -14,9 +14,18 @@
     -fx-border-radius: 50%;
 }
 
-
 .menu  {
     -fx-background-color: cyan;
+}
+
+.menu .button {
+    -fx-background-color: none;
+    -fx-font-weight: 900;
+    -fx-font-size: 25;
+    -fx-text-fill: black;
+}
+.menu .button:hover {
+    -fx-text-fill: yellow;
 }
 
 .scores  {
@@ -26,8 +35,19 @@
     -fx-padding: 20
 }
 
-.pause {
+/* Game ove and Pause */
+.top-panel {
     -fx-background-color: rgba(0, 0, 0, 0.85);
+}
+.top-panel .button {
+    -fx-background-color: none;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+}
+
+.top-panel .button:hover {
+    -fx-text-fill: yellow;
 }
 
 #info-text {
@@ -61,6 +81,22 @@
     -fx-text-fill: white;  
 }
 #level {
-    -fx-text-fill: yellow;
-    
+    -fx-text-fill: yellow;   
+}
+
+#save .clicked {
+   -fx-background-color: rgb(9, 185, 9);
+}
+
+#pause-label {
+    -fx-text-fill: white;
+}
+
+.top-panel .toggle-button:disabled {
+    -fx-opacity: 1.0;            
+}
+
+.top-panel .toggle-button:selected {
+    -fx-background-color: green;
+    -fx-text-fill: white;
 }

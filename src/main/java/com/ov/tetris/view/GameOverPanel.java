@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -13,7 +15,7 @@ import javafx.scene.text.Text;
 
 public class GameOverPanel extends VBox {
     private Button menuButton;
-    private Button saveButton;
+    private ToggleButton saveButton;
     private Label scoreLabel;
     private Label over;
     private Text congratulation;
@@ -22,10 +24,10 @@ public class GameOverPanel extends VBox {
 
     public GameOverPanel() {
         this.setAlignment(Pos.CENTER);
-        this.getStyleClass().add("pause");
+        this.getStyleClass().add("top-panel");
         this.setSpacing(15);
         this.setVisible(false);
-
+        
         over = new Label("GAME OVER");
         over.setId("info-text");
 
@@ -34,13 +36,14 @@ public class GameOverPanel extends VBox {
 
         menuButton = new Button("Back to menu");
         menuButton.setPadding(new Insets(5));
-
+        
         // Below fields shown only after highscore       
         nameField = new TextField();
         nameField.setPromptText("Write your name");
         nameField.setMaxWidth(300);
-
-        saveButton = new Button("SAVE");
+        
+        saveButton = new ToggleButton("SAVE");
+        saveButton.getStyleClass().add("toggle-button");
 
         congratulation = new Text("Congratulations! Your score made it to leaderboard!");
         congratulation.setId("congratulation");
@@ -58,6 +61,11 @@ public class GameOverPanel extends VBox {
 
         nameField.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
+            if (newText.isEmpty()) {
+                saveButton.setDisable(true);
+            } else {
+                saveButton.setDisable(false);
+            }
 
             if (newText.length() > maxLength) {
                 return null; // reject change to force max length of 10
@@ -73,7 +81,7 @@ public class GameOverPanel extends VBox {
         this.getChildren().addAll(over, scoreLabel, congratulation, textBox, menuButton);
     }
     
-    public void showGameOver(int score, boolean isHighScore) {
+    public void showGameOver(int score, boolean isHighScore, boolean isScoreLogged) {
         scoreLabel.setText("SCORE: " + score);
 
         if (isHighScore) {
@@ -102,7 +110,15 @@ public class GameOverPanel extends VBox {
     }
 
     public void setOnLogScore(Runnable action) {
-        saveButton.setOnAction(e -> action.run());
+        saveButton.setOnAction(e -> {
+            if (!nameField.getText().isEmpty()) {                
+                action.run();
+                // add style after click
+                saveButton.setText("✔");
+                saveButton.setDisable(true);
+                textBox.setDisable(true);
+            }
+        });
     }
 
     public String getPlayerName() {

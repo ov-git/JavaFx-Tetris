@@ -11,7 +11,7 @@ public class PausePanel extends VBox {
 
     public PausePanel() {
         this.setAlignment(Pos.CENTER);
-        this.getStyleClass().add("pause");
+        this.getStyleClass().add("top-panel");
         this.setSpacing(10);
         this.setVisible(false);
 

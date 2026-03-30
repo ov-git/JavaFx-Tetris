@@ -12,20 +12,20 @@ public class MenuPanel extends VBox {
 
     private final Button startButton;
     private final Button leaderboardButton;
+    private final Button quitButton;
 
     public MenuPanel() {
         this.setAlignment(Pos.CENTER);
-        this.setSpacing(25);
+        this.setSpacing(10);
         this.getStyleClass().add("menu");
 
         ImageView logo = ResourceLoader.getLogoImage();
 
         startButton = new Button("Start");
-        startButton.setPadding(new Insets(5,30,5,30));
         leaderboardButton = new Button("Leaderboard");
-        leaderboardButton.setPadding(new Insets(5,15,5,15));
+        quitButton = new Button("Quit");
 
-        this.getChildren().addAll(logo, startButton, leaderboardButton);
+        this.getChildren().addAll(logo, startButton, leaderboardButton, quitButton);
     }
 
     public void setOnStart(Runnable action) { // sets button on action for controller
@@ -33,6 +33,9 @@ public class MenuPanel extends VBox {
     }
     public void setOnLeaderboard(Runnable action) { // sets button on action for controller
         leaderboardButton.setOnAction(e -> action.run());
+    }
+    public void setOnQuit(Runnable action) { // sets button on action for controller
+        quitButton.setOnAction(e -> action.run());
     }
 
     
