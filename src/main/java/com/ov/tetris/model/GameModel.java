@@ -145,7 +145,8 @@ public class GameModel {
         score += 1; //Scores are rewarded for holding down      
     }
 
-    public void moveDown() {//auto move
+    public void moveDown() {
+        //auto move
         if (canMove(0, 1)) {
             for (Block b : currentPiece.getBlocks()) {
                 b.y++;
@@ -157,11 +158,9 @@ public class GameModel {
             nextPiece();
         }       
     }
-    public void Drop() {}
 
     private boolean canMove(int dx, int dy) {
         // Check bounds
-        // if (moveTimer < moveInterval) return false; 
         for (Block b : currentPiece.getBlocks()) {
             int newX = b.x + dx;
             int newY = b.y + dy;
@@ -189,25 +188,21 @@ public class GameModel {
             int x = b.x;
             int y = b.y;
 
+            // Grid collision
             if (x < 0 || x >= COLS || y >= ROWS) {
                 return false;
             }
 
+            // Check collision with placed blocks
             if (y >= 0 && grid[y][x] > 0) {
                 return false;
             }
         }
         return true;
     }
-
-    public boolean canSlide() {
-        if (moveTimer >= moveInterval) {
-            return true;
-        }
-        return false;
-    }
         
     private void lockPiece() {
+        // Locks active piece to the grid
         for (Block block : currentPiece.getBlocks()) {
             if (block.y >= 0) {
                 grid[block.y][block.x] = block.type;
@@ -217,7 +212,7 @@ public class GameModel {
     }
     
     public void clearRow() {
-        int cleared = 0;
+        int cleared = 0; // Counts cleared lines for placed piece
         for (int i = ROWS - 1; i > 0; i--) {
             boolean full = true;
 
@@ -236,7 +231,7 @@ public class GameModel {
             }
         }
         lines += cleared;
-        addScore(cleared);
+        addScore(cleared); // add score for cleared lines
         checkLevelUp();
     }
 
@@ -389,6 +384,7 @@ public class GameModel {
     }
 
     public void parseScoreList(String scoreString) {
+        // Parses score string read from file to highscore list
         String[] splitted = scoreString.split(",");
         for (String s : splitted) {
             try {
@@ -416,6 +412,7 @@ public class GameModel {
     }
     
     public boolean checkHighScore() {
+        // Checks if score is highscore and should be logged
         if (highScores.size() < 5)
             return true;
         for (Score s : highScores) {

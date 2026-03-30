@@ -2,7 +2,6 @@ package com.ov.tetris.view;
 
 import com.ov.tetris.util.ResourceLoader;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;

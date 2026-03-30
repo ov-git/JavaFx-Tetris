@@ -32,7 +32,12 @@ public class GameController {
     private boolean leftKeyPressed = false;
     private boolean rightKeyPressed = false;
 
-    public GameController(GamePanel gamePanel, InfoPanel infoPanel, QueuePanel queuePanel, MenuPanel menuPanel, ScoreList scoreList, PausePanel pausePanel, GameOverPanel gameOverPanel, BlockPanel holdPanel, GameModel model, Scene scene) {
+    public GameController(GamePanel gamePanel, InfoPanel infoPanel, QueuePanel queuePanel, MenuPanel menuPanel,
+            ScoreList scoreList, PausePanel pausePanel, GameOverPanel gameOverPanel, BlockPanel holdPanel,
+            GameModel model, Scene scene) {
+        // Model
+        this.model = model;
+        // Views
         this.gamePanel = gamePanel;
         this.infoPanel = infoPanel;
         this.queuePanel = queuePanel;
@@ -41,7 +46,6 @@ public class GameController {
         this.pausePanel = pausePanel;
         this.gameOverPanel = gameOverPanel;
         this.holdPanel = holdPanel;
-        this.model = model;
         this.gameScene = scene;
 
         // actions
@@ -171,7 +175,7 @@ public class GameController {
     }
     
     public void openMenu() {
-        model.startNewGame();
+        model.startNewGame(); // Resets the game state
         model.setGameState(1);//STOPPED
 
         pausePanel.setVisible(false);
