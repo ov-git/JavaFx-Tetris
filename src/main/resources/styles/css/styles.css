@@ -1,0 +1,66 @@
+.root {
+    -fx-background-color: rgb(0, 0, 100);
+}
+ 
+.panel {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+}
+
+#label {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-border-radius: 50%;
+}
+
+
+.menu  {
+    -fx-background-color: cyan;
+}
+
+.scores  {
+    -fx-background-color: cyan;
+    -fx-font-weight: bolder;
+    -fx-font-size: xx-large;
+    -fx-padding: 20
+}
+
+.pause {
+    -fx-background-color: rgba(0, 0, 0, 0.85);
+}
+
+#info-text {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+    -fx-font-size: xx-large;
+}
+
+#pause-instruction  {
+    -fx-text-fill: white;
+    -fx-font-size: large;
+    -fx-padding-bottom: 15;
+}
+
+#score {
+    -fx-text-fill: red; 
+}
+
+#game-score {
+    -fx-font-size: larger;
+    -fx-font-weight: bold;
+    -fx-text-fill: yellow; 
+}
+#congratulation {
+    -fx-font-size: larger;
+    -fx-font-weight: bold;
+    /* -fx-text-fill: white; Not working for Text*/
+}
+
+#lines {
+    -fx-text-fill: white;  
+}
+#level {
+    -fx-text-fill: yellow;
+    
+}

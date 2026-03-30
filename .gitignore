@@ -1,0 +1,15 @@
+# Build files
+/bin/
+/target/
+/build/
+
+# IDE files
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+score.txt 
