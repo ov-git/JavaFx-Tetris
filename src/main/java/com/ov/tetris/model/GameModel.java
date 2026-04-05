@@ -48,14 +48,19 @@ public class GameModel {
             1, // 19
             0 // 20+
     };
-    private int dropInterval = 45;
+    private int dropInterval = 45; //Initial drop speed, changes with level
     private int autoDropCounter = 0;
+    private boolean softDrop = false;
     
     private int moveInterval = 5; //Slows side moving to maintain control
     private int moveTimer = 0;
 
-    private int SLIDETIME = 100000;
+    //Slides
+    private int SLIDETIME = 10;
     private int slideTimer = 0;
+    private boolean onGround = false;
+    private int resetCount = 0;
+    private int maxResets = 15;
 
     private int level = 1;
     private int lines = 0; // Cleared lines
@@ -81,16 +86,47 @@ public class GameModel {
     }
 
     public void update() {
-        // Update game state here
-        if (currentPiece == null) {           
+        if (currentPiece == null) {
             initiatePieces();
             generateNewPiece();
         }
+
         autoDropCounter++;
         moveTimer++;
-        if (autoDropCounter >= dropInterval) {
-            moveDown();
+
+        boolean canMoveDown = canMove(0, 1);
+
+        if (autoDropCounter >= dropInterval || softDrop) {
             autoDropCounter = 0;
+
+            if (canMoveDown) {
+                moveDown();
+                onGround = false;
+                slideTimer = 0;
+            } else {
+                onGround = true;
+            }
+        }
+        if (onGround) {
+            slideTimer++;
+
+            if (slideTimer >= SLIDETIME) {
+                lockPiece();
+                setSpeedByLevel();
+                clearRow();
+                nextPiece();
+
+                resetCount = 0;
+                slideTimer = 0;
+                onGround = false;
+            }
+        }
+    }
+    
+    public void resetSlidetime() {
+        if (onGround && resetCount < maxResets) {
+            slideTimer = 0;
+            resetCount++;
         }
     }
 
@@ -99,6 +135,8 @@ public class GameModel {
             if (canMove(-1, 0)) {
                 currentPiece.moveLeft();
                 moveTimer = 0;
+
+                resetSlidetime();
             }
         }
     }
@@ -108,6 +146,8 @@ public class GameModel {
             if (canMove(1, 0)) {
                 currentPiece.moveRight();
                 moveTimer = 0;
+
+                resetSlidetime();
             }
         }
     }
@@ -119,6 +159,7 @@ public class GameModel {
         if (canRotate(tempBlocks)) {
             // If rotation is successful apply it to the actual piece
             currentPiece.applyRotation();
+            resetSlidetime();
         } else {
             tryKick(tempBlocks);
         }
@@ -146,22 +187,15 @@ public class GameModel {
     }
     
     public void softDrop() {//Key down
-        dropInterval = 0;
+        softDrop = true;
         score += 1; //Scores are rewarded for holding down      
     }
 
     public void moveDown() {
-        //auto move
-        if (canMove(0, 1)) {
-            for (Block b : currentPiece.getBlocks()) {
-                b.y++;
-                setSpeedByLevel();
-            }
-        } else {
-            lockPiece();
-            clearRow();
-            nextPiece();
-        }       
+        softDrop = false;       
+        for (Block b : currentPiece.getBlocks()) {
+            b.y++;
+        }                                            
     }
 
     private boolean canMove(int dx, int dy) {
