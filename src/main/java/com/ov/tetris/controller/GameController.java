@@ -89,6 +89,9 @@ public class GameController {
                 case W:
                     model.rotate();
                     break; // single press action
+                case SPACE:
+                    model.hardDrop();
+                    break;
                 default:
                     break;
         }

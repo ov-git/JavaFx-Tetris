@@ -191,11 +191,22 @@ public class GameModel {
         score += 1; //Scores are rewarded for holding down      
     }
 
+    public void hardDrop() {
+        while (canMove(0, 1)) {
+            moveDown();
+            score += 2; //Hard drop rewards more points
+        }
+        lockPiece();
+        setSpeedByLevel();
+        clearRow();
+        nextPiece();
+    }
+
     public void moveDown() {
-        softDrop = false;       
         for (Block b : currentPiece.getBlocks()) {
             b.y++;
         }                                            
+        softDrop = false;       
     }
 
     private boolean canMove(int dx, int dy) {
