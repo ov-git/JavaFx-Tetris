@@ -69,7 +69,9 @@ public class Tetris extends Application {
         root.getChildren().addAll(gameLayout, menu, scoreList, pause, gameOver);
  
         Scene scene = new Scene(root, 500, 500);
-        scene.getStylesheets().add("styles/css/styles.css");
+        
+        scene.getStylesheets().add(
+                getClass().getResource("/styles/css/styles.css").toExternalForm());
 
         controller = new GameController(gamePanel,infoPanel,queuePanel, menu, scoreList, pause, gameOver,hold, model, scene);
         
