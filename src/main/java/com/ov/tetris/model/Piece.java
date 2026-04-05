@@ -40,12 +40,6 @@ public abstract class Piece {
         return baseBlock.x;
     }
     
-    // public void setY(int y) {
-    //     for (Block b : blocks) {
-    //         b.y = y;
-    //     }
-    // }
-    
     public void rotate(int x, int y) {
         if (position < 4) {
             position++;
