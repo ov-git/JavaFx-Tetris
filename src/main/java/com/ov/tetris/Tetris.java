@@ -34,6 +34,9 @@ public class Tetris extends Application {
         StackPane root = new StackPane();
         root.getStyleClass().add("root");
 
+        root.setFocusTraversable(true);
+        root.requestFocus();
+
         HBox gameLayout = new HBox(); //During gameplay views
 
         VBox infoLayout = new VBox();
