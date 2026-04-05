@@ -1,7 +1,10 @@
+.gitignore
+
 # Build files
 /bin/
 /target/
 /build/
+/out/
 
 # IDE files
 .idea/
