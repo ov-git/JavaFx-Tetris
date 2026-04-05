@@ -113,9 +113,14 @@ public class GameModel {
     }
 
     public void rotate() {
+        // Create a temporary piece and see if it can rotate
         currentPiece.computeRotation();
-        if (canRotate(currentPiece.getTempBlocks())) {
+        Block[] tempBlocks = currentPiece.getTempBlocks();
+        if (canRotate(tempBlocks)) {
+            // If rotation is successful apply it to the actual piece
             currentPiece.applyRotation();
+        } else {
+            tryKick(tempBlocks);
         }
     }
 
@@ -182,17 +187,33 @@ public class GameModel {
         }
         return true;
     }
+
+    public void tryKick(Block[] blocks) {
+        int[] kicks = { -1, -1, 3 }; // sequence of x adjustments
+
+        for (int kick : kicks) {
+            for (Block b : blocks) {
+                b.x += kick;
+            }
+            if (canRotate(blocks)) {
+                currentPiece.applyRotation();
+                return;
+            }
+        }
+    }
     
     public boolean canRotate(Block[] blocks) {
         for (Block b : blocks) {
             int x = b.x;
-            int y = b.y;
-
-            // Grid collision
-            if (x < 0 || x >= COLS || y >= ROWS) {
+            int y = b.y;           
+            // Left wall collision
+            if (x < 0 || y >= ROWS) {
                 return false;
             }
-
+            // Right wall collision
+            if (x >= COLS || y >= ROWS) {
+                return false;               
+            }
             // Check collision with placed blocks
             if (y >= 0 && grid[y][x] > 0) {
                 return false;
